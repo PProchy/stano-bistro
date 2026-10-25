@@ -1,0 +1,16 @@
+# Environment specific config, copy to local.neon (it is not in git).
+# The values below are for the local Docker setup. On production keep only
+# the database section with the real credentials and no debugMode.
+
+parameters:
+	debugMode: true
+
+
+services:
+	cache.storage: Nette\Caching\Storages\DevNullStorage
+
+
+database:
+	dsn: 'mysql:host=db;dbname=bistro'
+	user: root
+	password: root

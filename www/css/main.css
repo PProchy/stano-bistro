@@ -1,0 +1,183 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Tahoma, sans-serif;
+}
+
+h2 {
+    font-size: calc(2rem + .9vw);
+}
+
+.bg-brown {
+    background: #9b8a65;
+}
+
+div#kontakt h3 {
+    font-weight: 500;
+    font-size: 1.6rem;
+}
+
+div#kontakt a.socials {
+    line-height: 1.5rem;
+    -webkit-transition: font-size .3s;
+}
+
+div#kontakt a.socials:hover {
+    font-size: 1.4rem;
+    transition-duration: .3s;
+    transition-property: all;
+}
+
+div#kontakt a:hover {
+    color: #56aabe;
+}
+
+div#kontakt .contact-div {
+    font-size: 0.9rem;
+}
+
+div#kontakt a {
+    color: #f8f9fa;
+}
+
+.socials-container {
+    width: 45px;
+
+}
+
+footer {
+    font-size: 14px;
+    color: rgba(255, 255, 255, .5);
+}
+
+footer a {
+    color: rgba(255, 255, 255, .5);
+}
+
+footer a:hover {
+    color: #56aabe;
+}
+
+a {
+    text-decoration: unset;
+}
+
+.menu-container .menu-header {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.menu-container .menu-text {
+    line-height: 2rem;
+    font-size: 1.1rem;
+}
+
+.menu-container .menu-text small {
+    display: block;
+    margin-top: -10px;
+    font-size: 0.9rem;
+    color: #9b8a65;
+}
+
+.menu-container .menu-text small.special {
+    line-height: 1rem;
+    margin-top: 0px;
+}
+
+.menu-container .menu-text small .dot {
+    transform: translateY(-30%);
+    height: 0.3rem;
+    width: 0.3rem;
+    background-color: #9b8a65;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+
+.menu-w-setup {
+    width: 50%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .menu-w-setup {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    header {
+        background-image: linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)), url('../images/header2.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    header {
+        background-image: linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)), url('../images/header2.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: block;
+    }
+}
+
+header .nav-link:hover {
+    color: #878f99 !important;
+}
+
+#menu {
+    max-width: 800px !important;
+}
+
+.btn-menu-container {
+    padding-bottom: 6rem;
+
+    a {
+        max-width: 250px;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    padding: 2rem 0;
+}
+
+@media only screen and (min-width: 992px) {
+    .btn-menu-container {
+        padding-bottom: 12rem;
+    }
+
+    h1 {
+        font-size: 5rem;
+        padding: 6rem 0;
+    }
+}
+
+.login-box {
+    max-width: 400px;
+}
+
+.input-group {
+    flex-wrap: wrap;
+}
+
+.input-group .form-control {
+    order: 1;
+}
+
+.input-group .input-group-text {
+    order: 2;
+}
+
+.input-group .help-block {
+    order: 3;
+    flex: 0 0 100%;
+}
+

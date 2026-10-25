@@ -1,0 +1,75 @@
+{block content}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div n:if="!isset($id)" class="col-12 py-3">
+                    <a class="btn btn-primary" n:href="User:default">Zpět</a>
+                </div>
+
+                <div class="col-12 py-3">
+                    <h2 class="pb-3">{if isset($id)}Upravit{else}Přidat{/if} uživatele</h2>
+
+                    {form userForm}
+                        <div class="row justify-content-center">
+
+                            {if $form->hasErrors()}
+                                <div class="col-12">
+                                    {foreach $form->errors as $error}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <strong>{$error}</strong>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {/foreach}
+                                </div>
+                            {/if}
+
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    {label name, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="name" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {label surname, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="surname" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {label email, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="email" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {label password, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="password" class="form-control" autocomplete="new-password">
+                                        <small n:if="isset($id)" class="form-text text-muted">Prázdné heslo = beze změny.</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {label password_confirm, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="password_confirm" class="form-control" autocomplete="new-password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row">
+                                    <input n:name="save" class="btn btn-primary mx-auto mb-3">
+                                </div>
+                            </div>
+                        </div>
+                    {/form}
+                </div>
+            </div>
+        </div>
+    </section>
+{/block}

@@ -1,0 +1,16 @@
+# Uploaded files (PDF menus) must not be indexed by search engines – their content changes often
+# and old links in search results then lead to outdated or deleted menus.
+<IfModule mod_headers.c>
+	Header always set X-Robots-Tag "noindex, nofollow"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# own RewriteEngine overrides the rules from www/.htaccess, so block dot files again
+	RewriteRule (^|/)\. - [F]
+
+	# deleted file returns 410 Gone, Google drops it from the index faster than with 404
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^ - [G]
+</IfModule>

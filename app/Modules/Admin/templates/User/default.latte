@@ -1,0 +1,23 @@
+{block name}
+    <h1>Uživatelé</h1>
+{/block}
+
+{block content}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 py-3">
+                <a class="btn btn-success" n:href="User:edit">Přidat uživatele</a>
+            </div>
+
+            <div class="col-12">
+
+                {control userGrid}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{/block}

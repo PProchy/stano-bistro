@@ -1,0 +1,48 @@
+{block navigation}
+    <header class="row">
+        <div class="col-12 py-lg-3">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container-fluid px-0 px-lg-5">
+                    <a class="navbar-brand nav-link text-light" n:href="Homepage:default">
+                        <img src="{$basePath}/images/logo.png"
+                             alt="Stano Bistro"
+                             width="50"
+                             height="50"
+                             class="img-fluid">
+                        Stano Bistro
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center">
+                            <li class="nav-item px-2">
+                                <a class="nav-link text-light" href="">Domů</a>
+                            </li>
+                            <li class="nav-item px-2">
+                                <a class="nav-link text-light" href="#galerie">Galerie</a>
+                            </li>
+                            <li class="nav-item px-2">
+                                <a class="nav-link text-light" href="#kontakt">Kontakt</a>
+                            </li>
+                        </ul>  
+                    </div>
+                </div>   
+            </nav>
+            <h1 class="text-light text-center">Stano Bistro</h1>
+            <div class="btn-menu-container d-flex flex-wrap text-center justify-content-center gap-4">
+                {foreach $menus as $menu}
+                    <div class="col-12 col-lg-auto">
+                        <a n-if="{$menu}" class="btn btn-outline-secondary px-5 py-3 text-light border-light w-100"
+                           target="_blank"
+                           href="{$basePath}/uploads/{$menu->file_name}">
+                            {$menu->button_name}
+                        </a>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    </header>
+{/block}

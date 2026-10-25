@@ -1,0 +1,71 @@
+{block content}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 py-3">
+                    <a class="btn btn-primary" n:href="Menu:default">Zpět</a>
+                </div>
+
+                <div class="col-12 py-3">
+                    <h2 class="pb-3">{if isset($id)}Upravit{else}Vytvořit{/if} menu položku</h2>
+
+                    {form menuForm}
+                        <div class="row justify-content-center">
+
+                            {if $form->hasErrors()}
+                                <div class="col-12">
+                                    {foreach $form->errors as $error}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <strong>{$error}</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    {/foreach}
+                                </div>
+                            {/if}
+
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    {label button_name, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="button_name" class="form-control" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {label file, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="file" class="form-control" type="file" accept=".pdf">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    {label order, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <input n:name="order" class="form-control" type="number">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    {label visible, class => "col-lg-4" /}
+                                    <div class="col-lg-8">
+                                        <select n:name="visible" class="form-control form-select">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row">
+                                    <input n:name="save" type="submit" class="btn btn-primary mx-auto mb-3">
+                                </div>
+                            </div>
+                        </div>
+                    {/form}
+                </div>
+            </div>
+        </div>
+    </section>
+{/block}

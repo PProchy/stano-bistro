@@ -1,0 +1,18 @@
+temp/
+log/
+.idea/
+.vscode/
+vendor/
+node_modules/
+
+# Local configuration
+config/local.neon
+.env
+
+# Docker
+docker-compose.override.yml
+bistro-db-data/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,59 @@
+{block aside}
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a n:href="Admin:default" class="brand-link">
+            <img src="{$basePath}/images/logo.png"
+                 alt="Bistro logo"
+                 class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">Stano Bistro</span>
+        </a>
+
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <li class="nav-item">
+                        <a n:href="Admin:default" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Přehled
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a n:href="Menu:default" class="nav-link">
+                            <i class="nav-icon fa-solid fa-utensils"></i>
+                            <p>
+                                Menu
+                            </p>
+                        </a>
+                    </li>
+                    <li n:if="$user->isInRole('admin')" class="nav-item">
+                        <a n:href="User:default" class="nav-link">
+                            <i class="nav-icon fa-solid fa-users"></i>
+                            <p>
+                                Uživatelé
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a n:href="User:edit $user->getId()" class="nav-link">
+                            <i class="nav-icon fa-solid fa-user"></i>
+                            <p>
+                                Můj účet
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a n:href="Login:out" class="nav-link">
+                            <i class="nav-icon fa fa-fw fa-sign-out"></i>
+                            <p>
+                                Odhlásit
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+{/block}

@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Dependencies (will be installed in container)
+vendor/
+
+# Nette temp files
+temp/*
+!temp/.gitignore
+log/*
+!log/.gitignore
+
+# Local config
+app/config/local.neon
+
+# Docker
+docker-compose.override.yml
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+!README.md

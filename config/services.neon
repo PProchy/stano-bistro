@@ -1,0 +1,12 @@
+services:
+	router: App\Router\RouterFactory::createRouter
+
+	menuFacade: App\Model\MenuFacade
+	userFacade: App\Model\UserFacade
+
+	adminPresenter:
+		factory: App\Modules\Admin\AdminPresenter(@tracy.logger, @userFacade, @menuFacade, %uploadDir%)
+	menuPresenter:
+		factory: App\Modules\Admin\MenuPresenter(@tracy.logger, @userFacade, @menuFacade, %uploadDir%)
+	userPresenter:
+		factory: App\Modules\Admin\UserPresenter(@tracy.logger, @userFacade, @menuFacade, %uploadDir%)

@@ -1,0 +1,22 @@
+parameters:
+	uploadDir: %wwwDir%/uploads/
+
+
+application:
+	errorPresenter: Front:Error
+	mapping:
+		*: App\Modules\*\*Presenter
+
+
+session:
+	expiration: 28 days
+	savePath: '%tempDir%/sessions'
+	autoStart: true
+	cookieSamesite: Lax
+
+
+di:
+	export:
+		parameters: no
+		tags: no
+
