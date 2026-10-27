@@ -42,7 +42,6 @@ jobs:
         run: |
           mkdir -p build/app build/www
           cp -r app config vendor build/app/
-          rm -f build/app/config/local.neon
           cp -r www/. build/www/
           # Uploaded menu PDFs live only on the server
           rm -rf build/www/uploads
@@ -53,10 +52,17 @@ jobs:
           sed -i "s#'/../vendor/#'/$up/$APP_DIR/vendor/#" build/www/index.php
           grep -F "'/$up/$APP_DIR/vendor/autoload.php'" build/www/index.php
 
+      # Crawling stays allowed (no Disallow in robots.txt), otherwise search
+      # engines would never see the noindex header and could still index the URLs
       - name: Keep test out of search engines
         if: ${{ (inputs.environment || 'test') == 'test' }}
         run: |
-          printf 'User-agent: *\nDisallow: /\n' > build/www/robots.txt
+          cat >> build/www/.htaccess <<'EOF'
+
+          <IfModule mod_headers.c>
+            Header always set X-Robots-Tag "noindex, nofollow"
+          </IfModule>
+          EOF
 
       - name: Upload application
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -67,6 +73,12 @@ jobs:
           protocol: ftps
           local-dir: build/app/
           server-dir: ${{ vars.APP_DIR }}/
+          # Excluded files are never uploaded nor deleted: local.neon is managed
+          # by hand on the server, the example is for developers only.
+          # This replaces the action's default excludes (.git*, node_modules),
+          # which are not needed: the build contains only app, config and vendor.
+          exclude: |
+            config/local.neon*
 
       - name: Upload document root
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

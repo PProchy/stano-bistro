@@ -48,5 +48,5 @@ Shared hosting (WEDOS), deployed over FTPS by `.github/workflows/deploy.yml`. A 
 - The app dir (`app`, `config`, `vendor`, `log`, `temp`) lives outside the document root, which holds the contents of `www/`. The workflow rewrites the `vendor/autoload.php` path in `www/index.php` accordingly; the repo version stays as is for Docker.
 - Paths and FTP credentials are GitHub environment variables and secrets, not in the repo.
 - The deploy only uploads changed files and deletes only files it uploaded itself (sync state in `.ftp-deploy-sync-state.json` on the server), so `www/uploads/`, `config/local.neon`, `log/` and `temp/` are never touched. It drops `temp/cache` at the end.
-- On test, `robots.txt` is replaced with `Disallow: /`. Test has its own DB (a copy of production) and no debug mode.
+- On test, the deploy appends `X-Robots-Tag: noindex, nofollow` to `www/.htaccess`. Do not add `Disallow` to `robots.txt` there: search engines would then never see the header. Test has its own DB (a copy of production) and no debug mode.
 - The root `.htaccess` is a copy of the WEDOS router in `/www/.htaccess` and is not deployed. Logs go to `log/` through Tracy.
