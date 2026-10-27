@@ -1,18 +1,27 @@
 name: Deploy
 
-# Production is deployed only on a manual click (Actions -> Deploy -> Run workflow)
+# Every push to main goes to test; production is deployed only on a manual click
+# (Actions -> Deploy -> Run workflow -> production)
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
-
-# Never run two deploys to the same server at once
-concurrency:
-  group: deploy-production
-  cancel-in-progress: false
+    inputs:
+      environment:
+        description: Target environment
+        type: choice
+        options: [test, production]
+        default: test
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production
+    # inputs are empty on push, so a push always deploys to test
+    environment: ${{ inputs.environment || 'test' }}
+    # Never run two deploys to the same environment at once
+    concurrency:
+      group: deploy-${{ inputs.environment || 'test' }}
+      cancel-in-progress: false
     env:
       # Paths relative to the FTP account root, without leading/trailing slash
       APP_DIR: ${{ vars.APP_DIR }}
@@ -43,6 +52,11 @@ jobs:
           up=$(echo "$DOCROOT_DIR" | sed 's#[^/][^/]*#..#g')
           sed -i "s#'/../vendor/#'/$up/$APP_DIR/vendor/#" build/www/index.php
           grep -F "'/$up/$APP_DIR/vendor/autoload.php'" build/www/index.php
+
+      - name: Keep test out of search engines
+        if: ${{ (inputs.environment || 'test') == 'test' }}
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > build/www/robots.txt
 
       - name: Upload application
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

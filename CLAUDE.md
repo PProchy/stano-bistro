@@ -25,7 +25,7 @@ There are no tests, linters or build steps. `nette/tester` is in require-dev but
 
 ## Architecture
 
-- **Bootstrap / config** (`app/Bootstrap.php`): loads `config/common.neon`, then `config/services.neon`, then `config/local.neon` **if it exists**. `local.neon` is per environment and not in git (template: `config/local.neon.example`): it holds the DB credentials everywhere, and locally also `debugMode: true` and a disabled cache. Debug mode is on only when `local.neon` sets `parameters: debugMode: true` (read before the configs are loaded). `common.neon` has no credentials. On production, `/bistro/config/local.neon` is uploaded by hand and never touched by the deploy.
+- **Bootstrap / config** (`app/Bootstrap.php`): loads `config/common.neon`, then `config/services.neon`, then `config/local.neon` **if it exists**. `local.neon` is per environment and not in git (template: `config/local.neon.example`): it holds the DB credentials everywhere, and locally also `debugMode: true` and a disabled cache. Debug mode is on only when `local.neon` sets `parameters: debugMode: true` (read before the configs are loaded). `common.neon` has no credentials. On the server, `config/local.neon` is uploaded by hand and never touched by the deploy.
 - **Modules**: presenters are mapped as `App\Modules\<Module>\<Name>Presenter`. Templates live next to them in `app/Modules/<Module>/templates/`.
   - `Front`: public site. `BasePresenter::beforeRender()` loads visible menu items (`$menus`) for the navigation on every page. `Homepage` has actions `default`, `gallery`, `contact` and `poster`, all template-only.
   - `Admin`: routed under `/administrace/<presenter>/<action>`. `AdminPresenter` is the base class: it redirects to `Login` in `startup()` if the user is not logged in. `LoginPresenter` extends the plain Nette `Presenter`, not `AdminPresenter`. Roles are `admin` and `editor`. Managing users requires `admin` (`UserPresenter::requireAdmin()`). Everyone else can edit only their own account.
@@ -38,4 +38,15 @@ There are no tests, linters or build steps. `nette/tester` is in require-dev but
 
 ## Deployment
 
-Production is shared hosting (WEDOS). The root `.htaccess` rewrites requests into `www/`. Production logs go to `log/` through Tracy.
+Shared hosting (WEDOS), deployed over FTPS by `.github/workflows/deploy.yml`. A push to `main` deploys to test; production is deployed only by running the workflow manually with `environment: production`.
+
+| Environment | URL | App dir (`APP_DIR`) | Document root (`DOCROOT_DIR`) |
+|---|---|---|---|
+| production | stano-bistro.cz | `/stano-bistro` | `/www/domains/stano-bistro.cz` |
+| test | test.stano-bistro.cz | `/stano-bistro-test` | `/www/domains/test.stano-bistro.cz` |
+
+- The app dir (`app`, `config`, `vendor`, `log`, `temp`) lives outside the document root, which holds the contents of `www/`. The workflow rewrites the `vendor/autoload.php` path in `www/index.php` accordingly; the repo version stays as is for Docker.
+- Paths and FTP credentials are GitHub environment variables and secrets, not in the repo.
+- The deploy only uploads changed files and deletes only files it uploaded itself (sync state in `.ftp-deploy-sync-state.json` on the server), so `www/uploads/`, `config/local.neon`, `log/` and `temp/` are never touched. It drops `temp/cache` at the end.
+- On test, `robots.txt` is replaced with `Disallow: /`. Test has its own DB (a copy of production) and no debug mode.
+- The root `.htaccess` is a copy of the WEDOS router in `/www/.htaccess` and is not deployed. Logs go to `log/` through Tracy.
